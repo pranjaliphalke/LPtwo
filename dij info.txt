@@ -1,0 +1,144 @@
+Sure! Let's go through the code step by step, explaining the logic behind each part of the enhanced Dijkstra’s algorithm implementation.
+
+📦 1. Imports and Class Definition
+python
+Copy
+Edit
+import heapq
+heapq is Python’s built-in module to implement priority queues using min-heaps.
+
+This is essential for Dijkstra’s algorithm to always process the closest unvisited node next.
+
+🧱 2. Graph Class Structure
+python
+Copy
+Edit
+class Graph:
+    def __init__(self, directed=False):
+        self.graph = {}
+        self.directed = directed
+self.graph: A dictionary where each node maps to a list of (neighbor, weight) tuples.
+
+directed: Optional parameter to support directed or undirected graphs.
+
+➕ 3. Adding Edges
+python
+Copy
+Edit
+def add_edge(self, u, v, weight):
+    self.graph.setdefault(u, []).append((v, weight))
+    if not self.directed:
+        self.graph.setdefault(v, []).append((u, weight))
+Adds an edge from node u to v with the given weight.
+
+Uses setdefault() to create the list if the node doesn’t exist yet.
+
+Adds the reverse edge too, if the graph is undirected.
+
+🔁 4. Dijkstra’s Algorithm
+python
+Copy
+Edit
+def dijkstra(self, start):
+    shortest_distances = {node: float('inf') for node in self.graph}
+    shortest_distances[start] = 0
+    previous_nodes = {node: None for node in self.graph}
+    priority_queue = [(0, start)]
+shortest_distances: Initially sets all node distances to ∞ (infinity), except the start node which is 0.
+
+previous_nodes: Tracks the previous node on the shortest path for each node.
+
+priority_queue: Min-heap initialized with the start node and distance 0.
+
+🧠 5. Main Loop
+python
+Copy
+Edit
+while priority_queue:
+    current_distance, current_node = heapq.heappop(priority_queue)
+
+    if current_distance > shortest_distances[current_node]:
+        continue
+Extracts the node with the smallest known distance.
+
+If this distance is already outdated (a shorter one was found later), skip it.
+
+🔄 6. Explore Neighbors
+python
+Copy
+Edit
+    for neighbor, weight in self.graph[current_node]:
+        distance = current_distance + weight
+        if distance < shortest_distances[neighbor]:
+            shortest_distances[neighbor] = distance
+            previous_nodes[neighbor] = current_node
+            heapq.heappush(priority_queue, (distance, neighbor))
+Checks each neighbor.
+
+If a shorter path to that neighbor is found, update the distance and the path.
+
+Push the updated neighbor into the queue.
+
+🧭 7. Path Reconstruction
+python
+Copy
+Edit
+def _reconstruct_paths(self, previous_nodes, start):
+    paths = {}
+    for node in self.graph:
+        path = []
+        current = node
+        while current is not None:
+            path.append(current)
+            current = previous_nodes[current]
+        path.reverse()
+        if path[0] == start:
+            paths[node] = path
+        else:
+            paths[node] = None
+    return paths
+For every node, traces back using previous_nodes from the end node to the start.
+
+Reverses the path to give it in start → end order.
+
+If a path doesn't start with the source, it's considered unreachable.
+
+▶️ 8. Usage Example
+python
+Copy
+Edit
+graph = Graph()
+graph.add_edge('A', 'B', 1)
+graph.add_edge('A', 'C', 4)
+graph.add_edge('B', 'C', 2)
+graph.add_edge('B', 'D', 5)
+graph.add_edge('C', 'D', 1)
+Builds a sample undirected graph.
+
+python
+Copy
+Edit
+start_node = 'A'
+distances, paths = graph.dijkstra(start_node)
+Runs Dijkstra’s algorithm from node 'A'.
+
+python
+Copy
+Edit
+for node, distance in distances.items():
+    print(f"{node}: {distance}")
+Displays the shortest distance from 'A' to each node.
+
+python
+Copy
+Edit
+for node, path in paths.items():
+    print(f"{node}: {' -> '.join(path) if path else 'Unreachable'}")
+Displays the actual path from 'A' to each node.
+
+🧠 Summary
+Heap-based priority queue ensures efficient selection of the next closest node.
+
+previous_nodes lets us reconstruct the shortest path after calculating distances.
+
+Flexible structure allows for easy extensions (e.g., directed graphs, early stopping at target, etc.).

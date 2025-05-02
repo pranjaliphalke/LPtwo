@@ -1,0 +1,134 @@
+Problem Statement (Job Scheduling with Deadlines)
+Given:
+
+A list of jobs j1, j2, ..., each with:
+
+a profit if it’s completed before or on its deadline
+
+a deadline: the last time slot in which it can be completed
+
+Objective: Schedule the jobs in such a way that:
+
+Only one job per time slot
+
+Maximize total profit
+
+📥 Input Data:
+python
+Copy
+Edit
+profit =   [15,  27, 10, 100, 150]
+jobs =     ["j1","j2","j3", "j4", "j5"]
+deadline = [2,    3,   3,   3,    4]
+We have 5 jobs:
+
+j5: profit 150, deadline 4
+
+j4: profit 100, deadline 3
+
+j2: profit 27, deadline 3
+
+j1: profit 15, deadline 2
+
+j3: profit 10, deadline 3
+
+🧩 Step-by-Step Code Explanation
+Step 1: Combine Jobs with Profits and Deadlines
+python
+Copy
+Edit
+profitNJobs = list(zip(profit, jobs, deadline))
+Now profitNJobs becomes:
+
+python
+Copy
+Edit
+[(15, 'j1', 2), (27, 'j2', 3), (10, 'j3', 3), (100, 'j4', 3), (150, 'j5', 4)]
+Step 2: Sort Jobs by Profit (Descending)
+python
+Copy
+Edit
+profitNJobs = sorted(profitNJobs, key=lambda x: x[0], reverse=True)
+Now we sort them by profit, so the most profitable job is considered first:
+
+python
+Copy
+Edit
+[(150, 'j5', 4), (100, 'j4', 3), (27, 'j2', 3), (15, 'j1', 2), (10, 'j3', 3)]
+Step 3: Initialize Time Slots
+python
+Copy
+Edit
+n = len(jobs)
+slot = [0] * (n + 1)      # To track occupied slots; slot[i] = 1 means occupied
+ans = ['null'] * (n + 1)  # To store job names in each time slot
+We use n+1 to make indexing from 1 to n easier (time slots 1 to n). Index 0 is unused.
+
+Step 4: Greedily Schedule Each Job
+python
+Copy
+Edit
+total_profit = 0
+
+for i in range(n):
+    job = profitNJobs[i]
+    for j in range(min(n, job[2]), 0, -1):
+        if slot[j] == 0:
+            slot[j] = 1
+            ans[j] = job[1]
+            total_profit += job[0]
+            break
+Explanation:
+
+Loop through sorted jobs (most profitable first).
+
+For each job, look for a free slot from its deadline backward to 1.
+
+If a free slot is found, assign the job to that slot, mark it occupied, and add its profit.
+
+Slot Scheduling Example:
+Let’s simulate scheduling:
+
+j5, profit=150, deadline=4 → slot 4 is free → place j5 in slot 4 ✅
+
+j4, profit=100, deadline=3 → slot 3 is free → place j4 in slot 3 ✅
+
+j2, profit=27, deadline=3 → slot 3 is taken → check slot 2 → free → place j2 ✅
+
+j1, profit=15, deadline=2 → slot 2 is taken → check slot 1 → free → place j1 ✅
+
+j3, profit=10, deadline=3 → all slots 3 → 1 are full → can't be scheduled ❌
+
+Final Outputs:
+python
+Copy
+Edit
+print("Jobs scheduled buddy:", ans[1:])
+print("Total Profit:", total_profit)
+ans[1:] = scheduled jobs: ['j1', 'j2', 'j4', 'j5']
+
+total_profit = 15 + 27 + 100 + 150 = 292
+
+✅ Summary of How the Algorithm Works
+Step	What Happens
+1	Combine job info (profit, job, deadline)
+2	Sort jobs by descending profit
+3	Try placing each job in latest available slot
+4	Track scheduled jobs and accumulate profit
+5	Print final scheduled jobs and total profit
+
+This is a greedy algorithm and is optimal for the Job Scheduling with Deadlines problem when:
+
+Each job takes 1 time unit
+
+Only one job can be scheduled per time unit
+
+Would you like to visualize this scheduling using a diagram or table?
+
+
+
+
+
+
+
+

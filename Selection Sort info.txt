@@ -1,0 +1,169 @@
+ What is Selection Sort?
+Selection Sort is a simple sorting algorithm that divides the input list into two parts:
+
+Sorted part at the front (left)
+
+Unsorted part at the back (right)
+
+The algorithm repeatedly selects the minimum element from the unsorted part and places it at the beginning (adds it to the sorted part).
+That's why it's called greedy — it always takes the best (smallest) option available at each step.
+
+🧠 How the Code Works – Step by Step
+📌 Step 1: Define the selection_sort_greedy function
+python
+Copy
+Edit
+def selection_sort_greedy(arr):
+    n = len(arr)
+    print("\nList before Sorting: ", arr,"\n")
+n is the number of elements in the array.
+
+The unsorted list is printed for reference.
+
+📌 Step 2: Outer loop — for each position i
+python
+Copy
+Edit
+for i in range(n):
+    min_idx = i
+You are currently at position i in the array.
+
+Assume the smallest element in the unsorted part begins at i.
+
+📌 Step 3: Inner loop — find the minimum element in the rest
+python
+Copy
+Edit
+    for j in range(i+1, n):
+        if arr[j] < arr[min_idx]:
+            min_idx = j
+You iterate through the unsorted portion of the array (i+1 to n-1).
+
+min_idx gets updated if a smaller element is found.
+
+📝 Greedy Choice: At each step, choose the smallest available element.
+
+📌 Step 4: Swap the found minimum with element at i
+python
+Copy
+Edit
+    arr[i], arr[min_idx] = arr[min_idx], arr[i]
+After finding the smallest element in the unsorted part, swap it with the element at the current index i.
+
+📌 Step 5: Print the array after each pass
+python
+Copy
+Edit
+    print("List After Pass ",i+1,": ",arr)
+Shows how the list changes after each round of selection and swapping.
+
+📌 Step 6: Return the sorted array
+python
+Copy
+Edit
+return arr
+📌 Input Section
+python
+Copy
+Edit
+n = int(input("Length of List: "))
+arr = []
+for i in range(n):
+    element = int(input("Enter List Element: "))
+    arr.append(element)
+User provides the size of the list and the elements manually.
+
+Input is stored in the list arr.
+
+📌 Final Output
+python
+Copy
+Edit
+print("\nSorted List is:", selection_sort_greedy(arr))
+Calls the sort function and prints the sorted result.
+
+📈 Sample Execution Breakdown
+Input:
+mathematica
+Copy
+Edit
+Length of List: 6
+Enter List Element: 4
+Enter List Element: 5
+Enter List Element: 89
+Enter List Element: 56
+Enter List Element: 2
+Enter List Element: 55
+Initial List:
+
+csharp
+Copy
+Edit
+[4, 5, 89, 56, 2, 55]
+Pass-by-pass explanation:
+Pass 1 (i = 0):
+Unsorted: [4, 5, 89, 56, 2, 55]
+
+Minimum: 2 at index 4
+
+Swap 4 and 2 → [2, 5, 89, 56, 4, 55]
+
+Pass 2 (i = 1):
+Unsorted: [5, 89, 56, 4, 55]
+
+Minimum: 4 at index 4
+
+Swap 5 and 4 → [2, 4, 89, 56, 5, 55]
+
+Pass 3 (i = 2):
+Unsorted: [89, 56, 5, 55]
+
+Minimum: 5 at index 4
+
+Swap 89 and 5 → [2, 4, 5, 56, 89, 55]
+
+Pass 4 (i = 3):
+Unsorted: [56, 89, 55]
+
+Minimum: 55 at index 5
+
+Swap 56 and 55 → [2, 4, 5, 55, 89, 56]
+
+Pass 5 (i = 4):
+Unsorted: [89, 56]
+
+Minimum: 56 at index 5
+
+Swap 89 and 56 → [2, 4, 5, 55, 56, 89]
+
+Pass 6 (i = 5):
+Only one element left, no change.
+
+✅ Final Sorted List:
+python
+Copy
+Edit
+[2, 4, 5, 55, 56, 89]
+🧮 Time & Space Complexity
+Complexity	Value
+Time (Worst/Avg)	O(n²)
+Space	O(1)
+In-place?	Yes
+Stable?	No (can be modified to be stable)
+
+🔚 Summary
+Greedy logic: Always pick the smallest available element.
+
+Simple to understand and implement.
+
+Efficient for small datasets, but inefficient for large ones due to O(n²) time.
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,162 @@
+ure! Let's walk through the improved dynamic DFS/BFS code step by step and explain what each part does in detail:
+
+🔧 1. Import Required Library
+python
+Copy
+Edit
+from collections import deque
+We import deque from collections — this is a double-ended queue. It allows us to efficiently pop from the front (O(1)) which is better than using a list (pop(0) is O(n)) for Breadth-First Search (BFS).
+
+🧠 2. DFS Function
+python
+Copy
+Edit
+def dfs(visited, graph, node):
+    if node not in visited:
+        print(node, end=" ")
+        visited.add(node)
+        for neighbour in graph[node]:
+            dfs(visited, graph, neighbour)
+Explanation:
+This is a recursive Depth-First Search (DFS).
+
+visited is a set() to keep track of visited nodes.
+
+If the current node is not visited:
+
+Print it.
+
+Mark it as visited.
+
+Recursively call DFS on each of its neighbors.
+
+The recursion will go as deep as possible before backtracking.
+
+🔄 3. BFS Function
+python
+Copy
+Edit
+def bfs(visited, graph, start_node):
+    queue = deque()
+    visited.add(start_node)
+    queue.append(start_node)
+
+    while queue:
+        node = queue.popleft()
+        print(node, end=" ")
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+Explanation:
+This is Breadth-First Search (BFS) using a queue.
+
+Start by marking the start node as visited and enqueue it.
+
+While there are nodes in the queue:
+
+Dequeue the first one.
+
+Print it.
+
+Visit all unvisited neighbors, mark them visited, and enqueue them.
+
+This explores level by level (breadth-first).
+
+🧱 4. Main Function
+python
+Copy
+Edit
+def main():
+    graph = dict()
+    visited_dfs = set()
+    visited_bfs = set()
+Initializes:
+
+graph: dictionary to store the adjacency list (graph structure).
+
+visited_dfs and visited_bfs: sets for keeping track of visited nodes in both searches.
+
+🧾 5. Graph Construction
+python
+Copy
+Edit
+    n = int(input("Enter number of nodes: "))
+    is_directed = input("Is the graph directed? (yes/no): ").strip().lower() == 'yes'
+Ask the user for:
+
+Number of nodes.
+
+Whether the graph is directed or undirected.
+
+🔁 Loop to Create Graph:
+python
+Copy
+Edit
+    for i in range(n):
+        node = int(input(f"\nEnter node {i+1} label: "))
+        edges = int(input(f"Enter number of edges for node {node}: "))
+        if node not in graph:
+            graph[node] = []
+
+        for j in range(edges):
+            neighbor = int(input(f"Enter edge {j+1} from node {node}: "))
+            graph[node].append(neighbor)
+
+            if neighbor not in graph:
+                graph[neighbor] = []
+
+            if not is_directed:
+                graph[neighbor].append(node)
+Explanation:
+For each node:
+
+Ask user for the node label (e.g., 1, 2, 3).
+
+Ask how many edges it has.
+
+For each edge, add the connection.
+
+If the graph is undirected, it adds the edge in both directions.
+
+🚩 6. Get Start Node & Run Traversals
+python
+Copy
+Edit
+    start_node = int(input("\nEnter the start node for traversal: "))
+    print("\nDFS Traversal:")
+    dfs(visited_dfs, graph, start_node)
+
+    print("\nBFS Traversal:")
+    bfs(visited_bfs, graph, start_node)
+Explanation:
+Ask for the start node.
+
+Call the dfs and bfs functions.
+
+They’ll traverse from that node and print the traversal order.
+
+🔚 7. Run the Main Function
+python
+Copy
+Edit
+if __name__ == "__main__":
+    main()
+This ensures that the script runs only when directly executed — not when imported as a module.
+
+📈 Summary:
+Concept	DFS	BFS
+Data Structure	Recursion (call stack)	Queue (deque)
+Explores	Depth-first	Breadth-first
+Suitable for	Maze solving, topological sort	Shortest path, friend suggestions
+Traversal Output	Can differ in order from BFS	Usually level-wise order
+
+Would you like me to walk through an example input/output step-by-step to show how the graph and traversals work?
+
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+from collections import deque
+
+def dfs(visited, graph, node):
+    if node not in visited:
+        print(node, end=" ")
+        visited.add(node)
+        for neighbour in graph[node]:
+            dfs(visited, graph, neighbour)
+
+def bfs(visited, graph, start_node):
+    queue = deque()
+    visited.add(start_node)
+    queue.append(start_node)
+
+    while queue:
+        node = queue.popleft()
+        print(node, end=" ")
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+
+def main():
+    graph = dict()
+    visited_dfs = set()
+    visited_bfs = set()
+
+    # Input number of nodes
+    n = int(input("Enter number of nodes: "))
+    
+    # Choose directed or undirected graph
+    is_directed = input("Is the graph directed? (yes/no): ").strip().lower() == 'yes'
+
+    # Build graph
+    for i in range(n):
+        node = int(input(f"\nEnter node {i+1} label: "))
+        edges = int(input(f"Enter number of edges for node {node}: "))
+        if node not in graph:
+            graph[node] = []
+
+        for j in range(edges):
+            neighbor = int(input(f"Enter edge {j+1} from node {node}: "))
+            graph[node].append(neighbor)
+
+            if neighbor not in graph:
+                graph[neighbor] = []
+
+            if not is_directed:
+                graph[neighbor].append(node)
+
+    # Choose start node
+    start_node = int(input("\nEnter the start node for traversal: "))
+
+    # DFS
+    print("\nDFS Traversal:")
+    dfs(visited_dfs, graph, start_node)
+
+    # BFS
+    print("\nBFS Traversal:")
+    bfs(visited_bfs, graph, start_node)
+
+if __name__ == "__main__":
+    main()

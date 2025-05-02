@@ -1,0 +1,126 @@
+Your code is a simple implementation of linear search in Apex, the programming language used on the Salesforce platform. Let's walk through it in detail.
+
+✅ What It Does
+The program searches for a given number (key) in a list of integers and tells whether the number is found or not found.
+
+🔍 Step-by-Step Explanation
+apex
+Copy
+Edit
+public class linearSearch {
+This defines a public class named linearSearch.
+
+public means it can be accessed from outside the class.
+
+apex
+Copy
+Edit
+    public static void main(Integer key){
+This is the main method that accepts an Integer argument key.
+
+Note: In Apex, there's no actual main() method like in Java. This is just a custom method, not the entry point of an Apex class unless called explicitly.
+
+apex
+Copy
+Edit
+        System.debug('Linear Search');
+Prints "Linear Search" to the debug log.
+
+apex
+Copy
+Edit
+        integer s = -1;
+A flag variable s, initialized to -1.
+
+It will be set to 1 if the key is found in the list.
+
+apex
+Copy
+Edit
+        List<integer> lon = new List<integer>();
+Declares a list lon of type Integer.
+
+apex
+Copy
+Edit
+        lon.add(3);
+        lon.add(4);
+        lon.add(5);
+        lon.add(6);
+Adds four integers to the list: [3, 4, 5, 6].
+
+apex
+Copy
+Edit
+        System.debug('List: ' + lon);
+Logs the content of the list to the debug output.
+
+🔁 Linear Search Loop
+apex
+Copy
+Edit
+        for(integer i = 0; i < lon.size(); i++)
+        {
+            if (key == lon[i])
+            {
+                s = 1;
+            }
+        }
+Loops through each index of the list.
+
+Compares each element to the key.
+
+If a match is found, sets s = 1.
+
+Note: It does not break out of the loop early. It continues checking all items even if the key is found.
+
+✅ Result Output
+apex
+Copy
+Edit
+        if (s == 1)
+        {
+            System.debug('Element Found');
+        }
+        else
+        {
+            System.debug('Element Not Found');
+        }
+If s was set to 1, it means the key was found.
+
+Otherwise, it prints "Element Not Found".
+
+🔧 Potential Improvements
+Break Early on Match (optimize search):
+
+apex
+Copy
+Edit
+if (key == lon[i]) {
+    s = 1;
+    break;
+}
+Use Built-in Method (if allowed):
+
+apex
+Copy
+Edit
+if (lon.contains(key)) {
+    System.debug('Element Found');
+} else {
+    System.debug('Element Not Found');
+}
+Naming Conventions:
+
+Use CamelCase for class names and variables, e.g., LinearSearch, searchFlag.
+
+🧪 Example Call
+To run the method, you'd call it like this from another Apex context:
+
+apex
+Copy
+Edit
+linearSearch.main(5);
+This would search for the number 5 in the list [3, 4, 5, 6] and print "Element Found".
+
+Would you like a version that returns the index of the found element instead of just found/not found?

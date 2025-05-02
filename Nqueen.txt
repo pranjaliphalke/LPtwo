@@ -1,0 +1,75 @@
+def print_solution(board):
+    n = len(board)
+    for row in range(n):
+        line = ""
+        for col in range(n):
+            if board[row] == col:
+                line += "Q "
+            else:
+                line += ". "
+        print(line)
+    print("\n")
+
+# ----------------- Backtracking -----------------
+def is_safe(board, row, col):
+    for i in range(row):
+        if board[i] == col or \
+           board[i] - i == col - row or \
+           board[i] + i == col + row:
+            return False
+    return True
+
+def solve_bt(board, row, n):
+    if row == n:
+        print("Backtracking solution:")
+        print_solution(board)
+        return True  # stop after first solution
+
+    for col in range(n):
+        if is_safe(board, row, col):
+            board[row] = col
+            if solve_bt(board, row + 1, n):
+                return True
+            board[row] = -1  # backtrack
+    return False
+
+def n_queens_backtracking(n):
+    board = [-1] * n
+    if not solve_bt(board, 0, n):
+        print("No solution found using Backtracking.")
+
+# ----------------- Branch and Bound -----------------
+def solve_bb(n):
+    cols = [False] * n
+    diag1 = [False] * (2 * n - 1)
+    diag2 = [False] * (2 * n - 1)
+    board = [-1] * n
+
+    def solve(row):
+        if row == n:
+            print("Branch and Bound solution:")
+            print_solution(board)
+            return True  # stop after first solution
+        for col in range(n):
+            if not cols[col] and not diag1[row - col + n - 1] and not diag2[row + col]:
+                board[row] = col
+                cols[col] = diag1[row - col + n - 1] = diag2[row + col] = True
+                if solve(row + 1):
+                    return True
+                # Backtrack
+                cols[col] = diag1[row - col + n - 1] = diag2[row + col] = False
+                board[row] = -1
+        return False
+
+    if not solve(0):
+        print("No solution found using Branch and Bound.")
+
+# ----------------- Main -----------------
+def main():
+    n = int(input("Enter the value of N for N-Queens: "))
+    print()
+    n_queens_backtracking(n)
+    solve_bb(n)
+
+if __name__ == "__main__":
+    main()

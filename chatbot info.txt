@@ -1,0 +1,162 @@
+. greet(bot_name, birth_year)
+python
+Copy
+Edit
+def greet(bot_name, birth_year):
+    print(f"Hello! My name is {bot_name}.")
+    print(f"I was created in {birth_year}.")
+Purpose: Introduces the bot using the name and birth year passed as arguments.
+
+String interpolation (f-strings) is used to embed variables directly into the output text.
+
+2. remind_name()
+python
+Copy
+Edit
+def remind_name():
+    print('Please, remind me your name.')
+    name = input()
+    print(f"What a great name you have, {name}!")
+Asks the user to type their name and then compliments them.
+
+input() reads user input as a string.
+
+The name is stored in a variable and printed back using an f-string.
+
+3. guess_age()
+python
+Copy
+Edit
+def guess_age():
+    print('Let me guess your age.')
+    print('Enter remainders of dividing your age by 3, 5, and 7.')
+    rem3 = int(input())
+    rem5 = int(input())
+    rem7 = int(input())
+    age = (rem3 * 70 + rem5 * 21 + rem7 * 15) % 105
+    print(f"Your age is {age}; that's a good time to start programming!")
+This uses the Chinese Remainder Theorem to guess the user’s age based on remainders when their age is divided by 3, 5, and 7.
+
+The formula:
+
+age
+=
+(
+𝑟
+𝑒
+𝑚
+3
+×
+70
++
+𝑟
+𝑒
+𝑚
+5
+×
+21
++
+𝑟
+𝑒
+𝑚
+7
+×
+15
+)
+m
+o
+d
+ 
+ 
+105
+age=(rem3×70+rem5×21+rem7×15)mod105
+It’s accurate for ages under 105.
+
+4. count()
+python
+Copy
+Edit
+def count():
+    print('Now I will prove to you that I can count to any number you want.')
+    num = int(input())
+    for i in range(num + 1):
+        print(f"{i}!")
+This function demonstrates a for loop.
+
+The user inputs a number, and the bot counts from 0 up to that number, printing each with an exclamation mark.
+
+5. test()
+python
+Copy
+Edit
+def test():
+    print("Let's test your programming knowledge.")
+    print("Why do we use methods?")
+    print("1. To repeat a statement multiple times.")
+    print("2. To decompose a program into several small subroutines.")
+    print("3. To determine the execution time of a program.")
+    print("4. To interrupt the execution of a program.")
+    answer = 2
+    while True:
+        guess = int(input())
+        if guess == answer:
+            print("Completed, have a nice day!")
+            break
+        else:
+            print("Please, try again.")
+A simple quiz with one correct answer (option 2).
+
+A while True loop keeps asking until the correct answer is given.
+
+This tests logical thinking and introduces the idea of validating user input.
+
+6. end()
+python
+Copy
+Edit
+def end():
+    print("Congratulations, have a nice day!")
+    print(". ")
+    print("............................................. ")
+    print("............................................. ")
+    input()
+Prints a goodbye message with decorative lines.
+
+input() is used to pause the program, so it doesn’t close immediately when run in some environments.
+
+7. Driver Code
+python
+Copy
+Edit
+# ----- Driver Code -----
+greet('TE-Chatbot', '2025')
+remind_name()
+guess_age() 
+count() 
+test()
+end()
+This is the main part that executes the chatbot sequence.
+
+It calls all the defined functions one by one in a logical order.
+
+Summary
+This script is great for beginners learning:
+
+Function definition and calling
+
+User input and output
+
+Basic control flow (loops, conditionals)
+
+Simple math (like the Chinese Remainder Theorem)
+
+Would you like a visual flowchart of this chatbot's logic?
+
+
+
+
+
+
+
+
+
